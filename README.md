@@ -2,8 +2,8 @@
 
 **Security-first HTTP error handling for FastAPI.**
 
-<!-- [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/fastapi-secure-errors)](https://pypi.org/project/fastapi-secure-errors/) -->
-<!-- [![PyPI](https://img.shields.io/pypi/v/fastapi-secure-errors)](https://pypi.org/project/fastapi-secure-errors/) -->
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/fastapi-secure-errors)](https://pypi.org/project/fastapi-secure-errors/)
+[![PyPI](https://img.shields.io/pypi/v/fastapi-secure-errors)](https://pypi.org/project/fastapi-secure-errors/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
@@ -38,7 +38,21 @@ This library provides a unified, security-focused approach to HTTP error handlin
 
 ## Installation
 
-Since this package is not yet published to PyPI, you can install it directly from the repository:
+Install from PyPI using pip:
+
+```bash
+pip install fastapi-secure-errors
+```
+
+Or using uv:
+
+```bash
+uv add fastapi-secure-errors
+```
+
+### Development Installation
+
+For development or to get the latest changes, you can install directly from the repository:
 
 ```bash
 pip install git+https://github.com/ciscomonkey/fastapi-secure-errors.git
