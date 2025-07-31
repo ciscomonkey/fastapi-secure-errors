@@ -1,0 +1,75 @@
+[project]
+name = "fastapi-secure-errors"
+version = "0.1.1"
+description = "Security-first HTTP error handling for FastAPI."
+readme = "README.md"
+license = "MIT"
+authors = [
+    { name = "Ryan Mullins", email = "" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.116.1",
+]
+
+[project.scripts]
+fastapi-secure-errors = "fastapi_secure_errors:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "fastapi[standard]>=0.116.1",
+]
+test = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=6.0.0",
+    "httpx>=0.25.0",
+]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config", 
+    "--showlocals",
+    "-v"
+]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+markers = [
+    "asyncio: marks tests as async (deselect with '-m \"not asyncio\"')"
+]
+asyncio_mode = "auto"
+
+[tool.coverage.run]
+source = ["src"]
+branch = true
+omit = [
+    "tests/*",
+    "examples/*",
+    "*/__pycache__/*"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:"
+]
+show_missing = true
+precision = 2
+
+[tool.coverage.html]
+directory = "htmlcov"

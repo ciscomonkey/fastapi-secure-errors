@@ -1,0 +1,63 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: release  # Specify the release environment
+    permissions:
+      id-token: write    # Required for trusted publishing
+      contents: write    # Required to add release assets and checkout code
+      
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+        
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+      with:
+        version: "latest"
+        
+    - name: Install dependencies
+      run: |
+        uv sync --all-extras
+        
+    - name: Build package
+      run: |
+        uv build
+        
+    - name: Upload package artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: python-package-distributions
+        path: dist/
+        
+    - name: Verify package contents
+      run: |
+        ls -la dist/
+        echo "Package files created:"
+        for file in dist/*; do
+          echo "  - $(basename "$file")"
+        done
+        
+    - name: Add package to release assets
+      uses: softprops/action-gh-release@v2
+      with:
+        files: dist/*
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    # Publish to PyPI using trusted publishing
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        # No token needed with trusted publishing!
+        verbose: true
